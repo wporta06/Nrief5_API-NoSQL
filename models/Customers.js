@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const CustomerSchema = mongoose.Schema({
     name: {
         type: 'string',
-        require: true
+        required: true
     },
     cin: {
         type: 'string',
-        require: true
+        required: true
     },
     phone: {
         type: 'string',
-        require: true
+        required: true
     },
     role: {
         type: 'string',

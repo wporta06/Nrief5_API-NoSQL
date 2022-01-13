@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Receptionist = require('../models/Receptionist')
-const Customer = require('../models/Customers')
+const Receptionist = require('../../models/Receptionist')
+const Customer = require('../../models/Customers')
 
 // get all customers
 router.get('/', async(req, res) => {

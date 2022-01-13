@@ -4,7 +4,7 @@ const Reservation = require('../models/Reservation')
 const Rooms = require('../models/Rooms')
 
 
-// get all Reservations
+// get all not reserved rooms
 router.get('/', async(req, res) => {
     // res.send('posttt')
     try {
@@ -15,7 +15,7 @@ router.get('/', async(req, res) => {
     }
 });
 
-// add reservation
+// create reservation
 router.post('/', async(req, res) => {
     // console.log(req.body)
     const reservation = new Reservation({
@@ -24,47 +24,48 @@ router.post('/', async(req, res) => {
         checkIn: req.body.checkIn,
         checkOut: req.body.checkOut,
     });
-
+    console.log(req.body.room);
     try {
-        const saveReservation = await reservation.save();
         const updatedRoom = await Rooms.updateOne({ _id: req.body.room }, { $set: { status: "reserved" } });
+        const saveReservation = await reservation.save();
 
-        res.json(saveReservation);
+        res.json({ saveReservation, updatedRoom });
 
     } catch (err) {
         res.json({ message: err });
     }
 });
 
-// get one
-router.get('/:reservationId', async(req, res) => {
+
+// get all his reservations
+router.get('/:customerId', async(req, res) => {
     try {
-        const reservation = await Reservation.findById(req.params.reservationId);
-        res.json(reservation);
+        const customerReservations = await Reservation.find({ customer: req.params.customerId })
+        res.json(customerReservations);
     } catch (err) {
         res.json({ message: err });
     }
 })
 
-// delete one
-router.delete('/:reservationId', async(req, res) => {
-    try {
-        const removereservation = await Reservation.remove({ _id: req.params.reservationId });
-        res.json(removereservation);
-    } catch (err) {
-        res.json({ message: err });
-    }
-})
+// // delete one
+// router.delete('/:reservationId', async(req, res) => {
+//     try {
+//         const removereservation = await Reservation.remove({ _id: req.params.reservationId });
+//         res.json(removereservation);
+//     } catch (err) {
+//         res.json({ message: err });
+//     }
+// })
 
-// update one
-router.patch('/:reservationId', async(req, res) => {
-    try {
-        const updatedReservation = await Reservation.updateOne({ _id: req.params.reservationId }, { $set: { customer: req.body.customer, room: req.body.room, checkIn: req.body.checkIn, checkOut: req.body.checkOut } });
-        res.json(updatedReservation);
-    } catch (err) {
-        res.json({ message: err });
-    }
-})
+// // update one
+// router.patch('/:reservationId', async(req, res) => {
+//     try {
+//         const updatedReservation = await Reservation.updateOne({ _id: req.params.reservationId }, { $set: { customer: req.body.customer, room: req.body.room, checkIn: req.body.checkIn, checkOut: req.body.checkOut } });
+//         res.json(updatedReservation);
+//     } catch (err) {
+//         res.json({ message: err });
+//     }
+// })
 
 
 module.exports = router;

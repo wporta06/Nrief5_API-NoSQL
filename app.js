@@ -13,8 +13,9 @@ app.use(bodyParser.json());
 
 // Imposrt routes
 const roomsRoute = require('./routes/roomsRoute');
-const customerRoute = require('./routes/customerRoute');
+const customerRoute = require('./routes/adminRoutes/customerDashboardRoute');
 const reservationRoute = require('./routes/reservationRoute');
+const reservationDashboardRoute = require('./routes/adminRoutes/reservationDashboardRoute');
 
 
 // ROUTES
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 app.use('/rooms', roomsRoute);
 app.use('/customers', customerRoute);
 app.use('/reservation', reservationRoute);
+app.use('/reservationDashboard', reservationDashboardRoute);
 
 // mongoose.connect(process.env.DB_CONNECTION, () => { console.log('connected to db') })
 mongoose.connect('mongodb+srv://hoteldb:admin123@cluster0.rdrot.mongodb.net/quizdb?retryWrites=true&w=majority', () => { console.log('connected to db') })

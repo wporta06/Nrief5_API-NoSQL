@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 
 const ReservationSchema = mongoose.Schema({
     customer: {
-        type: 'string'
+        type: 'string',
+        required: true
     },
     room: {
         type: 'string',
+        required: true
     },
     checkIn: Date,
     checkOut: Date,

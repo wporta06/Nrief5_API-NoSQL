@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const ReceptionistSchema = mongoose.Schema({
     name: {
         type: 'string',
-        require: true
+        required: true
     },
     email: {
         type: 'string',
-        require: true
+        required: true
     },
     role: {
         type: 'string',
